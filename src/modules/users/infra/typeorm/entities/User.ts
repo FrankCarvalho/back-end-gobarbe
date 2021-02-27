@@ -28,7 +28,6 @@ class User {
 
   @UpdateDateColumn()
   update_at: Date;
-
 }
 
 export default User;
