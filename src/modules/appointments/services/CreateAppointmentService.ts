@@ -1,6 +1,7 @@
-import { startOfHour, isBefore, getHours } from 'date-fns';
-import AppError from '@shared/errors/AppError';
 import { injectable, inject } from 'tsyringe';
+import { startOfHour, isBefore, getHours } from 'date-fns';
+
+import AppError from '@shared/errors/AppError';
 
 import Appointment from '../infra/typeorm/entities/Appointment';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
@@ -41,19 +42,15 @@ class CreateAppointmentService {
     const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate,
     );
-
     if (findAppointmentInSameDate) {
-      throw new AppError('Este compromisso já está agendado!');
+      throw new AppError('This appointment is already booked');
     }
-
     const appointment = await this.appointmentsRepository.create({
       provider_id,
       user_id,
       date: appointmentDate,
     });
-
     return appointment;
   }
 }
-
 export default CreateAppointmentService;
